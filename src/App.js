@@ -1,34 +1,43 @@
-import { useRef, useState } from 'react';
+import { useReducer } from 'react';
+import { useState } from 'react/cjs/react.development';
 import './App.css';
 
-const Input = ({ todo, setTodo }) => {
-    const userInput = useRef();
-
-    const addTodo = e => {
-        e.preventDefault();
-        const newTodo = userInput.current.value.trim();
-        if(newTodo !== '') setTodo([...todo, newTodo]);
-        userInput.current.value = '';
-    };
+function DisplayTodos({ todos }) {
     return (
-        <form id='input' onSubmit={addTodo}>
-            <input type='text'
-                ref={userInput}
-                id='todoInput'
-                placeholder='Enter the task' 
-            />
-            <button >Add</button>
-        </form>
-    )
-};
+        <ul>
+            {todos.map(todo => <li key={todo.id}>{todo.id} - {todo.text}</li>)}
+        </ul>
+    );
+}
 
 export default function App() {
-    const [todo, setTodo] = useState([]);
+    const [todo, setTodo] = useState('');
+    const [state, dispatch] = useReducer(
+        (state, action) => {
+            switch (action.type) {
+                case "ADD_TODO":
+                    return [...state, action.payload];
+                default:
+                    return state;
+            }
+        }, []);
+
+    const submit = (e) => {
+        e.preventDefault();
+        dispatch({ type: "ADD_TODO", payload: { id: state.length, text: todo } });
+    }
+
     return (
         <div className='container'>
             <h1 id='title'>Todo List!</h1>
-            <Input todo={todo} setTodo={setTodo} />
-            <ul>{todo.map(t => <li key={todo.indexOf(t)}>{t}</li>)}</ul>
+            <form onSubmit={submit}>
+                <input
+                    value={todo}
+                    onChange={e => setTodo(e.target.value)}
+                    type='text'
+                    placeholder='add todo' />
+            </form>
+            <DisplayTodos todos={state} />
         </div>
     );
 }
