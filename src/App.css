@@ -2,26 +2,63 @@
   width: 80%;
   height: 75vh;
   margin: 1rem auto;
-  border-radius: 15px;
-  box-shadow: 0 0 15px -5px;
   color: #333;
-  overflow: hidden;
 }
 
 #title {
-  background: #ddd;
   margin: 0;
   text-align: center;
   padding: 5px;
 }
 
-#input {
-  margin: 1rem 0;
+form {
+  width: 75%;
+  margin: 1.5rem auto;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 }
 
-#todoInput {
-  width: 50%;
-  margin-right: 1rem;
+ul {
+  margin: 0; padding: 0;
+}
+
+form input {
+  width: 80%;
+  font-size: 1rem;
+  padding: .6rem .5rem; 
+  border: none; 
+}
+
+form input:focus {
+  outline: none;
+}
+
+form button {
+  width: 15%;
+  border: none;
+}
+
+form input, form button {
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px #333;
+}
+
+.todo {
+  width: 75%;
+  padding: .15rem 1rem;
+  margin: 1rem auto;
+  display: flex;
+  align-items: center;
+  box-shadow: 2px 2px 15px #333;
+  border-radius: 5px;
+  background: #fff;
+}
+
+input, span {
+  display: inline-block;
+}
+
+.todo p {
+  width: 80%;
+  padding: 0 2rem;
 }

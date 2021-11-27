@@ -2,12 +2,22 @@ import { useReducer } from 'react';
 import { useState } from 'react/cjs/react.development';
 import './App.css';
 
+function Todo({ todo }) {
+    return (
+        <li className="todo">
+            <input type='checkbox' />
+            <p>{todo.text}</p>
+            <span>edit</span>
+        </li>
+    );
+}
+
 function DisplayTodos({ todos }) {
     return (
         <ul>
-            {todos.map(todo => <li key={todo.id}>{todo.id} - {todo.text}</li>)}
+            {todos.map(todo => <Todo todo={todo} key={todo.id}/>)}
         </ul>
-    );
+    )
 }
 
 export default function App() {
@@ -24,20 +34,26 @@ export default function App() {
 
     const submit = (e) => {
         e.preventDefault();
-        dispatch({ type: "ADD_TODO", payload: { id: state.length, text: todo } });
+        if (todo !== "") {
+            dispatch({ type: "ADD_TODO", payload: { id: state.length, text: todo } });
+        }
+        setTodo("");
     }
 
     return (
         <div className='container'>
             <h1 id='title'>Todo List!</h1>
+            <DisplayTodos todos={state} />
             <form onSubmit={submit}>
                 <input
                     value={todo}
                     onChange={e => setTodo(e.target.value)}
                     type='text'
-                    placeholder='add todo' />
+                    placeholder='Add todo'
+                />
+                <button>Add</button>
+
             </form>
-            <DisplayTodos todos={state} />
         </div>
     );
 }
